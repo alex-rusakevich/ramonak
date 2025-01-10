@@ -1,6 +1,7 @@
-from ramonak.flextract import get_stem_data
+from ramonak.stemmer import SimpleStemmer
 
-flexions = get_stem_data()
+stemmer = SimpleStemmer()
 
-print("Знойдзена", len(flexions), "флекс.")
-print(flexions)
+while True:
+    word = input("Word to stem: ")
+    print(stemmer.stem_word(word))

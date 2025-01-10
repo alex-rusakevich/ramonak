@@ -1,11 +1,13 @@
 import io
 import zipfile
 from pathlib import Path
+from typing import Tuple
 
 import requests
 from tqdm import tqdm
 
 from ramonak import PACKAGES_PATH
+from ramonak.packages.nexus import PACKAGES
 
 
 def fetch_unzip(zip_file_url: str, destination_dir: str) -> Path:
@@ -36,26 +38,50 @@ def package_exists(package_name: str) -> bool:
         return False
 
 
-def require(package_name: str) -> None:
-    print(f"Required {package_name}...", end=" ")
+def package_basic_info(package: str) -> Tuple[str, str, str]:
+    package_version = ""
+    package_name = ""
+    package_author = ""
 
-    if package_exists(package_name):
+    if package.count("/") == 2:
+        package_author, package_name, package_version = package.split("/")
+    elif package.count("/") == 1:
+        package_author, package_name = package.split("/")
+        package_version = sorted(
+            PACKAGES[package_author][package_name].items(),
+            key=lambda x: x[0],
+            reverse=True,
+        )[0][0]
+    else:
+        raise Exception(
+            "Wrong package name. At least author and package name must be present"
+        )
+
+    return package_author, package_name, package_version
+
+
+def require(wished_package: str) -> None:
+    print(f"Required {wished_package}...", end=" ")
+
+    if package_exists(wished_package):
         print("Package exists, skipping")
         return
     else:
         print("Downloading...")
 
-    if package_name == "@bnkorpus/grammar_db/20230920":
-        fetch_unzip(
-            "https://github.com/Belarus/GrammarDB/releases/download/RELEASE-202309/RELEASE-20230920.zip",
-            Path(PACKAGES_PATH, package_name),
-        )
-    else:
-        print("Unknown package. Stopping...")
-        return
+    package_author, package_name, package_version = package_basic_info(wished_package)
 
-    print("OK")
+    file_url = PACKAGES[package_author][package_name][package_version]
+
+    fetch_unzip(
+        file_url,
+        Path(PACKAGES_PATH, package_author, package_name, str(package_version)),
+    )
+
+    print(
+        f"The package '{package_author}/{package_name}/{package_version}' has been installed successfully"
+    )
 
 
-def package_path(package_name: str) -> str:
-    return Path(PACKAGES_PATH, package_name)
+def package_path(package_name: str) -> Path:
+    return Path(PACKAGES_PATH, *(str(i) for i in package_basic_info(package_name)))
