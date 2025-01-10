@@ -31,6 +31,9 @@ dependencies = [
   "python-dotenv>=1.0.1",
 ]
 
+[tool.hatch.build.targets.sdist]
+exclude = [".env.dev"]
+
 [project.urls]
 Documentation = "https://github.com/Alexander Rusakevich/ramonak#readme"
 Issues = "https://github.com/Alexander Rusakevich/ramonak/issues"
