@@ -30,7 +30,7 @@ def fetch_unzip(zip_file_url: str, destination_dir: str) -> Path:
 
 
 def package_exists(package_name: str) -> bool:
-    package_dir = Path(PACKAGES_PATH, *package_name.split("/"))
+    package_dir = package_path(package_name)
 
     if package_dir.exists() and any(package_dir.iterdir()):
         return True
@@ -64,7 +64,7 @@ def require(wished_package: str) -> None:
     print(f"Required {wished_package}...", end=" ")
 
     if package_exists(wished_package):
-        print("Package exists, skipping")
+        print("OK")
         return
     else:
         print("Downloading...")
