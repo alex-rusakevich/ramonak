@@ -172,4 +172,8 @@ cython_debug/
 
 # region Custom ignores
 /ncorp/
+/.alerus/
+/.vim/
+
+.env.prod
 # endregion
