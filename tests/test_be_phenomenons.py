@@ -1,12 +1,10 @@
-from ramonak.stemmer import SimpleStemmer
+from ramonak.stemmer import FlexionStatStemmer
 
-fix_lang_phenomenons = SimpleStemmer.fix_lang_phenomenons
+fix_lang_phenomenons = FlexionStatStemmer.fix_lang_phenomenons
 
 
 def test_dz_ts_and_jvowel():
-    assert fix_lang_phenomenons("савецізіраваны") == fix_lang_phenomenons(
-        "саветызіраваны"
-    )
+    assert fix_lang_phenomenons("савецізіраваны") == "саветызіраваны"
 
 
 def test_dz_ts_jvowel_and_v():

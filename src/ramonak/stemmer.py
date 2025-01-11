@@ -3,7 +3,7 @@ import re
 from ramonak.packages.actions import package_path, require
 
 
-class SimpleStemmer:
+class FlexionStatStemmer:
     def __init__(self):
         require("@alerus/stemdata")
 
@@ -53,7 +53,7 @@ class SimpleStemmer:
         if word in self.unchangeable_words:
             return word
 
-        word = SimpleStemmer.fix_lang_phenomenons(word)
+        word = FlexionStatStemmer.fix_lang_phenomenons(word)
 
         for flexion in self.flexions:
             if word.endswith(flexion):

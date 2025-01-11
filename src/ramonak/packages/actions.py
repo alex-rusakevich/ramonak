@@ -1,4 +1,6 @@
 import io
+import json
+import os
 import zipfile
 from pathlib import Path
 from typing import Tuple
@@ -7,7 +9,10 @@ import requests
 from tqdm import tqdm
 
 from ramonak import PACKAGES_PATH
-from ramonak.packages.nexus import PACKAGES
+
+PACKAGES = json.load(
+    open(Path(os.path.dirname(__file__), "nexus.json"), "r", encoding="utf8")
+)
 
 
 def fetch_unzip(zip_file_url: str, destination_dir: str) -> Path:
