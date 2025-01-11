@@ -1,6 +1,7 @@
-from ramonak.stemmer import FlexionStatStemmer
+from ramonak.stemmer import SnowballStemmer
 
-stemmer = FlexionStatStemmer()
+stemmer = SnowballStemmer()
+
 
 while True:
     word = input("Word to stem: ")
