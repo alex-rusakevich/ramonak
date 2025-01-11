@@ -24,6 +24,10 @@ class Stemmer:
             word = re.sub("цв" + jvowel, "тв" + vowel, word)
         # endregion
 
+        # region Remove ў at the beginning
+        word = re.sub(r"^ў", "у", word)
+        # endregion
+
         return word
 
     def stem_words(self, words: list[str]) -> list[str]:
