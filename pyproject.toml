@@ -57,4 +57,3 @@ tests = ["tests", "*/ramonak/tests"]
 exclude_lines = ["no cov", "if __name__ == .__main__.:", "if TYPE_CHECKING:"]
 
 [tool.hatch.envs.default.scripts]
-interactive = "python src/ramonak/interactive.py"
