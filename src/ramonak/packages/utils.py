@@ -1,4 +1,5 @@
 import io
+import re
 import zipfile
 from pathlib import Path
 from typing import Tuple
@@ -30,13 +31,12 @@ def fetch_unzip(zip_file_url: str, destination_dir: str) -> Path:
     z.extractall(destination_dir)
 
 
-def package_path(package_name: str) -> Path:
-    return Path(
-        PACKAGES_PATH, *(str(i) for i in get_package_exact_id_parts(package_name))
-    )
+def package_path(package_id: str) -> Path:
+    author, name, version = get_package_id_parts(package_id)
+    return Path(PACKAGES_PATH, author, name, version)
 
 
-def package_exists(package_name: str) -> bool:
+def local_package_exists(package_name: str) -> bool:
     package_dir = package_path(package_name)
 
     if package_dir.exists() and any(package_dir.iterdir()):
@@ -45,16 +45,18 @@ def package_exists(package_name: str) -> bool:
         return False
 
 
-def get_package_exact_id_parts(package: str) -> Tuple[str, str, str]:
+def get_package_id_parts(package: str) -> Tuple[str, str, str]:
+    package = re.sub(r"\s", "", package)
+
     package_version = ""
     package_name = ""
     package_author = ""
 
-    if package.count("/") == 2:
-        package_author, package_name, package_version = package.split("/")
-    elif package.count("/") == 1:
+    if "==" in package:  # Installing exact version
+        _, package_version = package.split("==")
+        package_author, package_name = package.split("==")[0].split("/")
+    elif package.count("/") == 1:  # Get latest version
         package_author, package_name = package.split("/")
-        package_version = get_package_versions(package_author, package_name)[-1]["id"]
     else:
         raise Exception(
             "Wrong package name. At least author and package name must be present"
@@ -79,7 +81,7 @@ def retrieve_package_url(package_author, package_name, package_version) -> str:
             return version["url"]
 
     raise Exception(
-        "No such package versions found: {}/{}/{}".format(
+        "No such package version found: {}/{}=={}".format(
             package_author, package_name, package_version
         )
     )

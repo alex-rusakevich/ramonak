@@ -1,6 +1,7 @@
-from ramonak.stemmer import SnowballStemmer
+from ramonak.packages.actions import remove
+from ramonak.stemmer import FlexionStatStemmer
 
-stemmer = SnowballStemmer()
+stemmer = FlexionStatStemmer()
 
 
 while True:
