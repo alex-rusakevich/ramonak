@@ -1,6 +1,6 @@
 [package_info]
 id = "@alerus/flexistat_data"
-name = "Дадзеныя для стэммера FlexionStatStemmer"
+name = "Дадзеныя для стэмера FlexionStatStemmer"
 author = "Аляксандр Русакевіч (mr.alexander.rusakevich@gmail.com)"
 maintainer = "author"
 homepage = "https://github.com/alex-rusakevich/ramonak-flexistat-data/"
