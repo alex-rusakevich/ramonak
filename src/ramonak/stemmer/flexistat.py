@@ -1,4 +1,5 @@
-from ramonak.packages.actions import package_path, require
+from ramonak.packages.actions import require
+from ramonak.packages.utils import package_path
 
 from .base import Stemmer
 
