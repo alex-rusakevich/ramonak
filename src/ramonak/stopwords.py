@@ -2,12 +2,9 @@ import re
 from typing import Iterable, Union
 
 from ramonak.packages.actions import require
-from ramonak.packages.utils import package_path
-
-require("@alerus/stopwords")
 
 STOP_WORDS = (
-    (package_path("@alerus/stopwords") / "belarusian.txt")
+    (require("@alerus/stopwords") / "belarusian.txt")
     .read_text(encoding="utf8")
     .split("\n")
 )

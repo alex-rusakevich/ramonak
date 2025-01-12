@@ -1,18 +1,17 @@
 from ramonak.packages.actions import require
-from ramonak.packages.utils import package_path
 
 from .base import Stemmer
 
 
 class FlexionStatStemmer(Stemmer):
     def __init__(self):
-        require("@alerus/stemdata")
+        flexistat_dir = require("@alerus/flexistat_data")
 
         self.unchangeable_words = []
         self.flexions = []
 
         for word in open(
-            package_path("@alerus/stemdata") / "unchangeable_words.txt",
+            flexistat_dir / "unchangeable_words.txt",
             "r",
             encoding="utf8",
         ).readlines():
@@ -22,7 +21,9 @@ class FlexionStatStemmer(Stemmer):
                 self.unchangeable_words.append(word)
 
         for flexion in open(
-            package_path("@alerus/stemdata") / "flexions.txt", "r", encoding="utf8"
+            flexistat_dir / "flexions.txt",
+            "r",
+            encoding="utf8",
         ).readlines():
             flexion = flexion.strip()
 
