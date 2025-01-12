@@ -1,7 +1,11 @@
 import shutil
 from pathlib import Path
+from typing import Union
+
+import tomllib
 
 from ramonak import PACKAGES_PATH
+from ramonak.packages import NEXUS_PATH
 from ramonak.packages.utils import (
     fetch_unzip,
     get_package_id_parts,
@@ -80,3 +84,27 @@ def purge():
     PACKAGES_PATH.mkdir(parents=True)
 
     print("OK")
+
+
+def info(package_id) -> Union[str, dict]:
+    author, name, version = get_package_id_parts(package_id)
+    package_file = str(Path(NEXUS_PATH, author, name)) + ".toml"
+    descriptor_text = open(package_file, "r", encoding="utf8").read()
+    descriptor_data = tomllib.loads(descriptor_text)
+
+    if not version:
+        print("type", "=", "metapackage")
+    else:
+        print("type", "=", "package")
+
+    for key, value in descriptor_data["package_info"].items():
+        print(key, "=", value)
+
+    if not version:
+        versions = ",".join(v["id"] for v in descriptor_data["versions"])
+        print(f"versions = [{versions}]")
+    else:
+        version = next(v for v in descriptor_data["versions"] if v["id"] == version)
+
+        for key, value in version.items():
+            print(f"version.{key} = {value}")
