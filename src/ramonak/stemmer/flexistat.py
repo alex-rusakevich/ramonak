@@ -1,4 +1,5 @@
 from ramonak.packages.actions import require
+from ramonak.rules import fix_lang_phenomenons
 
 from .base import Stemmer
 
@@ -34,7 +35,7 @@ class FlexionStatStemmer(Stemmer):
         if word in self.unchangeable_words:
             return word
 
-        word = FlexionStatStemmer.fix_lang_phenomenons(word)
+        word = fix_lang_phenomenons(word)
 
         for flexion in self.flexions:
             if word.endswith(flexion):

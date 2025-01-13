@@ -1,10 +1,6 @@
 import pytest
 
-from ramonak.stemmer.base import Stemmer
 from ramonak.stopwords import STOP_WORDS, clean_stop_words
-
-fix_lang_phenomenons = Stemmer.fix_lang_phenomenons
-
 
 specific_words = ["мы", "аднак", "безумоўна"]
 

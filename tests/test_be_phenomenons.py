@@ -1,6 +1,4 @@
-from ramonak.stemmer.base import Stemmer
-
-fix_lang_phenomenons = Stemmer.fix_lang_phenomenons
+from ramonak.rules import fix_lang_phenomenons
 
 
 def test_dz_ts_and_jvowel():
