@@ -1,9 +1,11 @@
 import os
 from pathlib import Path
+from typing import cast
 
 from dotenv import dotenv_values
 
-os.environ = {**os.environ, **dotenv_values(".env.dev"), **dotenv_values(".env.prod")}
+os.environ.update(cast(dict[str, str], dotenv_values(".env.dev")))
+os.environ.update(cast(dict[str, str], dotenv_values(".env.prod")))
 
 RAMONAK_PATH = Path(
     os.environ.get(

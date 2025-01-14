@@ -1,3 +1,3 @@
 # ruff: noqa: F401
 
-from .flexistat import FlexionStatStemmer
+from ramonak.stemmer.flexistat import FlexionStatStemmer

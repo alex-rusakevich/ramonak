@@ -1,8 +1,6 @@
 import shutil
-from pathlib import Path
-from typing import Union
-
 import tomllib
+from pathlib import Path
 
 from ramonak import PACKAGES_PATH
 from ramonak.packages import NEXUS_PATH
@@ -34,8 +32,7 @@ def require(package_id: str) -> Path:
     if local_package_exists(package_id):
         print("Already satisfied")
         return package_path
-    else:
-        print("Downloading...")
+    print("Downloading...")
 
     file_url = retrieve_package_url(package_author, package_name, package_version)
 
@@ -52,27 +49,28 @@ def require(package_id: str) -> Path:
 
 
 def remove(package_id: str):
-    removable_path = ""
+    removable_path: Path | str = ""
 
     author, name, version = get_package_id_parts(package_id)
 
     if "==" not in package_id:
         print(
-            "Removing the local metapackage '{}/{}'...".format(author, name),
+            f"Removing the local metapackage '{author}/{name}'...",
             end=" ",
         )
         removable_path = Path(PACKAGES_PATH, author, name)
     else:
         print(
-            "Removing the local package '{}/{}=={}'...".format(author, name, version),
+            f"Removing the local package '{author}/{name}=={version}'...",
             end=" ",
         )
         removable_path = Path(PACKAGES_PATH, author, name, version)
 
     try:
         shutil.rmtree(removable_path)
-    except FileNotFoundError:
-        raise Exception("The package doesn't exist in the local storage")
+    except FileNotFoundError as err:
+        msg = "The package doesn't exist in the local storage"
+        raise Exception(msg) from err
     else:
         print("OK")
 
@@ -86,10 +84,10 @@ def purge():
     print("OK")
 
 
-def info(package_id) -> Union[str, dict]:
+def info(package_id):
     author, name, version = get_package_id_parts(package_id)
     package_file = str(Path(NEXUS_PATH, author, name)) + ".toml"
-    descriptor_text = open(package_file, "r", encoding="utf8").read()
+    descriptor_text = Path(package_file).read_text(encoding="utf8")
     descriptor_data = tomllib.loads(descriptor_text)
 
     if not version:
@@ -104,7 +102,9 @@ def info(package_id) -> Union[str, dict]:
         versions = ",".join(v["id"] for v in descriptor_data["versions"])
         print(f"versions = [{versions}]")
     else:
-        version = next(v for v in descriptor_data["versions"] if v["id"] == version)
+        version_dict = next(
+            v for v in descriptor_data["versions"] if v["id"] == version
+        )
 
-        for key, value in version.items():
+        for key, value in version_dict.items():
             print(f"version.{key} = {value}")

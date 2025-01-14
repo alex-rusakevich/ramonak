@@ -40,8 +40,14 @@ path = "src/ramonak/__about__.py"
 
 [tool.hatch.envs.types]
 extra-dependencies = ["mypy>=1.0.0"]
+
+[tool.mypy]
+[[tool.mypy.overrides]]
+module = "pytest.*"
+follow_untyped_imports = true
+
 [tool.hatch.envs.types.scripts]
-check = "mypy --install-types --non-interactive {args:src/ramonak tests}"
+check = "mypy --install-types --ignore-missing-imports --non-interactive {args:src/ramonak tests}"
 
 [tool.coverage.run]
 source_pkgs = ["ramonak", "tests"]
@@ -55,5 +61,11 @@ tests = ["tests", "*/ramonak/tests"]
 
 [tool.coverage.report]
 exclude_lines = ["no cov", "if __name__ == .__main__.:", "if TYPE_CHECKING:"]
+
+[tool.ruff.lint]
+ignore = ["RUF001", "T201"]
+
+[tool.hatch.envs.hatch-test]
+parallel = true
 
 [tool.hatch.envs.default.scripts]

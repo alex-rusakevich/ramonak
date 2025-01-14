@@ -31,8 +31,4 @@ def fix_lang_phenomenons(word: str) -> str:
     word = unify_dz_ts_to_d_t(word)
     # endregion
 
-    # region Remove ў at the beginning
-    word = fix_trailing_u_short(word)
-    # endregion
-
-    return word
+    return fix_trailing_u_short(word)
