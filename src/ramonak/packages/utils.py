@@ -8,6 +8,7 @@ import requests
 from tqdm import tqdm
 
 from ramonak import PACKAGES_PATH
+from ramonak.exceptions import RamonakPackageManagerError
 from ramonak.packages import NEXUS_PATH
 
 
@@ -59,7 +60,7 @@ def get_package_id_parts(package: str) -> tuple[str, str, str]:
         package_author, package_name = package.split("/")
     else:
         msg = "Wrong package name. At least author and package name must be present"
-        raise Exception(msg)
+        raise RamonakPackageManagerError(msg)
 
     return package_author, package_name, package_version
 
@@ -80,4 +81,4 @@ def retrieve_package_url(package_author, package_name, package_version) -> str:
             return version["url"]
 
     msg = f"No such package version found: {package_author}/{package_name}=={package_version}"
-    raise Exception(msg)
+    raise RamonakPackageManagerError(msg)

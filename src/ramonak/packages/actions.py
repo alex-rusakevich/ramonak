@@ -3,6 +3,7 @@ import tomllib
 from pathlib import Path
 
 from ramonak import PACKAGES_PATH
+from ramonak.exceptions import RamonakPackageManagerError
 from ramonak.packages import NEXUS_PATH
 from ramonak.packages.utils import (
     fetch_unzip,
@@ -25,9 +26,7 @@ def require(package_id: str) -> Path:
     else:
         print(f"Required package '{package_id}'...", end=" ")
 
-    package_path = Path(
-        PACKAGES_PATH, package_author, package_name, str(package_version)
-    )
+    package_path = Path(PACKAGES_PATH, package_author, package_name, str(package_version))
 
     if local_package_exists(package_id):
         print("Already satisfied")
@@ -41,9 +40,7 @@ def require(package_id: str) -> Path:
         package_path,
     )
 
-    print(
-        f"The package '{package_author}/{package_name}=={package_version}' has been installed successfully"
-    )
+    print(f"The package '{package_author}/{package_name}=={package_version}' has been installed successfully")
 
     return package_path
 
@@ -70,7 +67,7 @@ def remove(package_id: str):
         shutil.rmtree(removable_path)
     except FileNotFoundError as err:
         msg = "The package doesn't exist in the local storage"
-        raise Exception(msg) from err
+        raise RamonakPackageManagerError(msg) from err
     else:
         print("OK")
 
@@ -102,9 +99,7 @@ def info(package_id):
         versions = ",".join(v["id"] for v in descriptor_data["versions"])
         print(f"versions = [{versions}]")
     else:
-        version_dict = next(
-            v for v in descriptor_data["versions"] if v["id"] == version
-        )
+        version_dict = next(v for v in descriptor_data["versions"] if v["id"] == version)
 
         for key, value in version_dict.items():
             print(f"version.{key} = {value}")

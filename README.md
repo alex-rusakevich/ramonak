@@ -28,10 +28,11 @@ import ramonak
 from ramonak.tokenizer import word_tokenize
 from ramonak.stemmer import FlexionStatStemmer
 from ramonak.stopwords import clean_stop_words
+from ramonak.punct import remove_punct
 
 
-text = "Яны iшлi ўдвух выкатанаю нячутна-пругкiмi веласiпедамi сцежкаю ля шэрых нямогла нахiленых да вулiцы платоў".lower()
-tokens = word_tokenize(text, remove_punct=True)
+text = "Яны iшлi ўдвух выкатанаю нячутна-пругкiмi веласiпедамi сцежкаю ля шэрых нямогла нахiленых да вулiцы платоў...".lower()
+tokens = remove_punct(word_tokenize(text))
 tokens = clean_stop_words(tokens)
 
 stemmer = FlexionStatStemmer()

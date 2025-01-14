@@ -7,11 +7,7 @@ from dotenv import dotenv_values
 os.environ.update(cast(dict[str, str], dotenv_values(".env.dev")))
 os.environ.update(cast(dict[str, str], dotenv_values(".env.prod")))
 
-RAMONAK_PATH = Path(
-    os.environ.get(
-        "RAMONAK_PATH", os.path.join(os.path.expanduser("~"), ".alerus", "ramonak")
-    )
-)
+RAMONAK_PATH = Path(os.environ.get("RAMONAK_PATH", os.path.join(os.path.expanduser("~"), ".alerus", "ramonak")))
 
 PACKAGES_PATH = Path(RAMONAK_PATH, "packages")
 

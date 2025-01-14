@@ -18,9 +18,7 @@ def test_word_tokenize():
 
 
 def test_word_tokenize_remove_punct():
-    assert word_tokenize(
-        "а я, аднак, быў там... але даволі даўно", remove_punct=True
-    ) == [
+    assert word_tokenize("а я, аднак, быў там... але даволі даўно", remove_punct=True) == [
         "а",
         "я",
         "аднак",
