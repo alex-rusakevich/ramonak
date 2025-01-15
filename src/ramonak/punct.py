@@ -8,16 +8,21 @@ re_word_punct = re.compile(rf"[{re.escape(WORD_PUNCT)}]")
 SENT_PUNCT = ".?!…"
 
 
-def remove_punct(data: str | Iterable[str]) -> str | Iterable[str]:
-    print(data)
+def remove_punct(data: Iterable[str]) -> Iterable[str]:
+    """Выдаліць знакі пунктуацыі са спісу радкоў
 
-    if isinstance(data, str):
-        data = re_word_punct.sub("", data)
-        data = re.sub(r" {2,}", " ", data)
-
-        return data.strip()
+    :param data: спіс радкоў
+    :type data: Iterable[str]
+    :raises TypeError: няправільны тып дадзеных у ˋdataˋ
+    :return: спіс радкоў без знакаў пунктуацыі
+    :rtype: Iterable[str]
+    """
 
     word_list = []
+
+    if isinstance(data, str):
+        msg = f"Wrong type: {type(data).__name__}. Data must be str or an iterable with str"
+        raise TypeError(msg)
 
     for data_word in data:
         if not isinstance(data_word, str):

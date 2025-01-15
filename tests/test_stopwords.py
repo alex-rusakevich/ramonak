@@ -15,7 +15,3 @@ def test_check_words(word):
 
 def test_clean_stop_words_in_list():
     assert clean_stop_words(["не", "пайшоў", "а", "паехаў"]) == ["пайшоў", "паехаў"]
-
-
-def test_clean_stop_words_in_str():
-    assert clean_stop_words("не пайшоў, а паехаў") == "пайшоў, паехаў"

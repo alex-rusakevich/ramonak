@@ -63,7 +63,7 @@ tests = ["tests", "*/ramonak/tests"]
 exclude_lines = ["no cov", "if __name__ == .__main__.:", "if TYPE_CHECKING:"]
 
 [tool.ruff.lint]
-ignore = ["RUF001", "T201"]
+ignore = ["RUF001", "T201", "RUF002"]
 
 [tool.hatch.envs.hatch-test]
 parallel = true
