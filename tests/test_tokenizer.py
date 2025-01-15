@@ -1,3 +1,4 @@
+from ramonak.punct import remove_punct
 from ramonak.tokenizer import sent_tokenize, word_tokenize
 
 
@@ -18,7 +19,7 @@ def test_word_tokenize():
 
 
 def test_word_tokenize_remove_punct():
-    assert word_tokenize("а я, аднак, быў там... але даволі даўно", remove_punct=True) == [
+    assert remove_punct(word_tokenize("а я, аднак, быў там... але даволі даўно")) == [
         "а",
         "я",
         "аднак",

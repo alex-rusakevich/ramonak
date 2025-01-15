@@ -69,3 +69,4 @@ ignore = ["RUF001", "T201"]
 parallel = true
 
 [tool.hatch.envs.default.scripts]
+checkup = "hatch test && hatch fmt --check && hatch run types:check"

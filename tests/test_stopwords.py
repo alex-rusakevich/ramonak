@@ -1,6 +1,9 @@
 import pytest
 
+from ramonak.packages.actions import require
 from ramonak.stopwords import STOP_WORDS, clean_stop_words
+
+require("@alerus/stopwords")
 
 specific_words = ["мы", "аднак", "безумоўна"]
 
