@@ -4,6 +4,9 @@ from ramonak.stemmer.base import Stemmer
 
 
 class FlexionStatStemmer(Stemmer):
+    """Стэмер на аснове статыстыкі флексій
+    """    
+
     def __init__(self):
         flexistat_dir = require("@alerus/flexistat_data")
 
@@ -31,6 +34,19 @@ class FlexionStatStemmer(Stemmer):
                     self.flexions.append(flexion)
 
     def stem_word(self, word: str) -> str:
+        """Апрацаваць слова стэмерам на аснове алгарытма статыстыкі флексій
+
+        Parameters
+        ----------
+        word : str
+            слова, якое трэба апрацаваць
+
+        Returns
+        -------
+        str
+            слова, якое было апрацавана стэмерам
+        """
+
         if word in self.unchangeable_words:
             return word
 

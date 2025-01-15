@@ -11,11 +11,20 @@ SENT_PUNCT = ".?!…"
 def remove_punct(data: Iterable[str]) -> Iterable[str]:
     """Выдаліць знакі пунктуацыі са спісу радкоў
 
-    :param data: спіс радкоў
-    :type data: Iterable[str]
-    :raises TypeError: няправільны тып дадзеных у ˋdataˋ
-    :return: спіс радкоў без знакаў пунктуацыі
-    :rtype: Iterable[str]
+    Parameters
+    ----------
+    data : Iterable[str]
+        спіс радкоў
+
+    Returns
+    -------
+    Iterable[str]
+        спіс радкоў без знакаў пунктуацыі
+
+    Raises
+    ------
+    TypeError
+        няправільны тып дадзеных у ˋdataˋ
     """
 
     word_list = []

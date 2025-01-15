@@ -65,6 +65,12 @@ exclude_lines = ["no cov", "if __name__ == .__main__.:", "if TYPE_CHECKING:"]
 [tool.ruff.lint]
 ignore = ["RUF001", "T201", "RUF002"]
 
+[tool.hatch.envs.docs]
+dependencies = ["pdoc3"]
+
+[tool.hatch.envs.docs.scripts]
+generate = "pdoc -c 'docformat=\"numpy\"' --force --output-dir=docs ."
+
 [tool.hatch.envs.hatch-test]
 parallel = true
 

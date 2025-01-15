@@ -15,6 +15,28 @@ from ramonak.packages.utils import (
 
 
 def require(package_id: str) -> Path:
+    """Падключыць да кода пакет з дадзенымі. Калі гэтага пакета няма,
+    ён будзе спампаваны.
+
+    Parameters
+    ----------
+    package_id : str
+        id пакета, напрыклад, ˋ@alerus/stopwordsˋ. Імя састаіць
+        з кода аўтара і імя пакета
+
+    Returns
+    -------
+    Path
+        шлях да папкі, куды пакет быў усталяваны. Файламі адтуль можна
+        карыстацца з дапамогай ˋ/ˋ
+
+    Examples
+    --------
+    .. code-block:: python
+        package = require("@author/package")
+        f = open(package / "file.txt", "r", encoding="utf8")
+    """
+
     package_author, package_name, package_version = get_package_id_parts(package_id)
 
     if "==" not in package_id:
@@ -46,6 +68,30 @@ def require(package_id: str) -> Path:
 
 
 def remove(package_id: str):
+    """Выдаліць пакет з лакальнага сховішча
+
+    Parameters
+    ----------
+    package_id : str
+        id пакета у фармаце ˋ@author/packageˋ. Можна
+        таксама ўказаць канкрэтны нумар версіі, дабавіўшы ў канцы
+        ˋ==version_numberˋ. Без гэтага азначэння будуць выдалены ўсе версіі
+        пакета
+
+    Raises
+    ------
+    RamonakPackageManagerError
+        няправільнае імя пакета або пакет не існуе
+
+    Examples
+    --------
+    .. code-block:: python
+        remove("@alerus/package") # выдаліць усе версіі пакета
+        remove("@alerus/package==123") # выдаліць пакет з версіяй ˋ123ˋ
+    """    
+
+    remove()
+
     removable_path: Path | str = ""
 
     author, name, version = get_package_id_parts(package_id)
@@ -73,6 +119,9 @@ def remove(package_id: str):
 
 
 def purge():
+    """Выдаліць *усе* пакеты з лакальнага сховішча
+    """    
+
     print("Removing all the local packages...", end=" ")
 
     shutil.rmtree(PACKAGES_PATH)
@@ -81,7 +130,16 @@ def purge():
     print("OK")
 
 
-def info(package_id):
+def info(package_id: str):
+    """Вывесці інфармацыю пра пакет
+
+    Parameters
+    ----------
+    package_id : str
+        id пакета у фармаце ˋ@author/packageˋ
+        або ˋ@author/package==versionˋ
+    """   
+
     author, name, version = get_package_id_parts(package_id)
     package_file = str(Path(NEXUS_PATH, author, name)) + ".toml"
     descriptor_text = Path(package_file).read_text(encoding="utf8")

@@ -8,11 +8,20 @@ STOP_WORDS = (require("@alerus/stopwords") / "belarusian.txt").read_text(encodin
 def clean_stop_words(data: Iterable[str]) -> Iterable[str]:
     """Убраць усе стоп-словы са спісу радкоў
 
-    :param data: спіс радкоў
-    :type data: Iterable[str]
-    :raises TypeError: няправільны тып дадзеных у ˋdataˋ
-    :return: спіс радкоў без стоп-слоў
-    :rtype: Iterable[str]
+    Parameters
+    ----------
+    data : Iterable[str]
+        спіс радкоў
+
+    Returns
+    -------
+    Iterable[str]
+        спіс радкоў без стоп-слоў
+
+    Raises
+    ------
+    TypeError
+        няправільны тып дадзеных у ˋdataˋ
     """
 
     if isinstance(data, str):
