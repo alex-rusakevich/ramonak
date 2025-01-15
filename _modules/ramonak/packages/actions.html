@@ -300,9 +300,7 @@
     <span class="k">else</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Required package &#39;</span><span class="si">{</span><span class="n">package_id</span><span class="si">}</span><span class="s2">&#39;...&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
 
-    <span class="n">package_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span>
-        <span class="n">PACKAGES_PATH</span><span class="p">,</span> <span class="n">package_author</span><span class="p">,</span> <span class="n">package_name</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">package_version</span><span class="p">)</span>
-    <span class="p">)</span>
+    <span class="n">package_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">PACKAGES_PATH</span><span class="p">,</span> <span class="n">package_author</span><span class="p">,</span> <span class="n">package_name</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">package_version</span><span class="p">))</span>
 
     <span class="k">if</span> <span class="n">_local_package_exists</span><span class="p">(</span><span class="n">package_id</span><span class="p">):</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Already satisfied&quot;</span><span class="p">)</span>
@@ -316,9 +314,7 @@
         <span class="n">package_path</span><span class="p">,</span>
     <span class="p">)</span>
 
-    <span class="nb">print</span><span class="p">(</span>
-        <span class="sa">f</span><span class="s2">&quot;The package &#39;</span><span class="si">{</span><span class="n">package_author</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">package_name</span><span class="si">}</span><span class="s2">==</span><span class="si">{</span><span class="n">package_version</span><span class="si">}</span><span class="s2">&#39; has been installed successfully&quot;</span>
-    <span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The package &#39;</span><span class="si">{</span><span class="n">package_author</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">package_name</span><span class="si">}</span><span class="s2">==</span><span class="si">{</span><span class="n">package_version</span><span class="si">}</span><span class="s2">&#39; has been installed successfully&quot;</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">package_path</span></div>
 
@@ -418,9 +414,7 @@
         <span class="n">versions</span> <span class="o">=</span> <span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">descriptor_data</span><span class="p">[</span><span class="s2">&quot;versions&quot;</span><span class="p">])</span>
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;versions = [</span><span class="si">{</span><span class="n">versions</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">version_dict</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span>
-            <span class="n">v</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">descriptor_data</span><span class="p">[</span><span class="s2">&quot;versions&quot;</span><span class="p">]</span> <span class="k">if</span> <span class="n">v</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">version</span>
-        <span class="p">)</span>
+        <span class="n">version_dict</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">v</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">descriptor_data</span><span class="p">[</span><span class="s2">&quot;versions&quot;</span><span class="p">]</span> <span class="k">if</span> <span class="n">v</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">version</span><span class="p">)</span>
 
         <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">version_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;version.</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2"> = </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
