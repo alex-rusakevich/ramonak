@@ -1,17 +1,15 @@
-name: Build PyPI package
+name: Check the standards
 
 on:
   push:
     branches: [ master ]
   pull_request:
     branches: [ master ]
-    types:
-      - closed
 
 jobs:
-  build-publish-pkg:
+  build-deploy-docs:
     runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request' && github.event.pull_request.merged == true
+
     steps:
       - name: Check out the repository
         uses: actions/checkout@v2
@@ -24,16 +22,18 @@ jobs:
       - name: Install dependencies
         run: |
           pip install hatch
-  
+
       - name: Run checks, linting, etc.
         run: |
           hatch run checkup
-    
-      - name: Build Package
+
+      - name: Build Sphinx documentation
         run: |
-          hatch build
-  
-      - name: Publish Package
-        env:
-          PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
-        run: hatch publish --user __token__ --auth $PYPI_TOKEN
+          hatch run docs:build
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs/_build/html
+          publish_branch: gh-pages
