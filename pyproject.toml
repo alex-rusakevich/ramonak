@@ -76,8 +76,8 @@ convention = "numpy"
 dependencies = ["sphinx", "sphinx-book-theme"]
 
 [tool.hatch.envs.docs.scripts]
-generate = "cd docs && sphinx-apidoc -o . ../src/ramonak && make html && cd .."
-server = "cd docs/_build/html && python -m http.server 8089 && cd ../../../"
+build = "cd docs && sphinx-apidoc -o . ../src/ramonak && make html && cd .."
+serve = "cd docs/_build/html && python -m http.server 8089 && cd ../../../"
 publish = "git subtree push --prefix docs/_build/html origin gh-pages"
 
 [tool.hatch.envs.hatch-test]

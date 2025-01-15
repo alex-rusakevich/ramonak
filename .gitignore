@@ -69,7 +69,11 @@ instance/
 .scrapy
 
 # Sphinx documentation
-# docs/_build/
+docs/_build/*
+!docs/_build/html
+docs/_build/html/*
+!docs/_build/html/.nojekyll
+!docs/_build/html/.gitignore
 
 # PyBuilder
 .pybuilder/

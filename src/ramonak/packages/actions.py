@@ -22,14 +22,14 @@ def require(package_id: str) -> Path:
     Parameters
     ----------
     package_id : str
-        id пакета, напрыклад, ˋ@alerus/stopwordsˋ. Імя састаіць
+        id пакета, напрыклад, ``@alerus/stopwords``. Імя састаіць
         з кода аўтара і імя пакета
 
     Returns
     -------
     Path
         шлях да папкі, куды пакет быў усталяваны. Файламі адтуль можна
-        карыстацца з дапамогай ˋ/ˋ
+        карыстацца з дапамогай ``/``
 
     Examples
     --------
@@ -50,7 +50,9 @@ def require(package_id: str) -> Path:
     else:
         print(f"Required package '{package_id}'...", end=" ")
 
-    package_path = Path(PACKAGES_PATH, package_author, package_name, str(package_version))
+    package_path = Path(
+        PACKAGES_PATH, package_author, package_name, str(package_version)
+    )
 
     if _local_package_exists(package_id):
         print("Already satisfied")
@@ -64,7 +66,9 @@ def require(package_id: str) -> Path:
         package_path,
     )
 
-    print(f"The package '{package_author}/{package_name}=={package_version}' has been installed successfully")
+    print(
+        f"The package '{package_author}/{package_name}=={package_version}' has been installed successfully"
+    )
 
     return package_path
 
@@ -75,9 +79,9 @@ def remove(package_id: str):
     Parameters
     ----------
     package_id : str
-        id пакета у фармаце ˋ@author/packageˋ. Можна
+        id пакета у фармаце ``@author/package``. Можна
         таксама ўказаць канкрэтны нумар версіі, дабавіўшы ў канцы
-        ˋ==version_numberˋ. Без гэтага азначэння будуць выдалены ўсе версіі
+        ``==version_number``. Без гэтага азначэння будуць выдалены ўсе версіі
         пакета
 
     Raises
@@ -91,7 +95,7 @@ def remove(package_id: str):
         :linenos:
 
         remove("@alerus/package")  # выдаліць усе версіі пакета
-        remove("@alerus/package==123")  # выдаліць пакет з версіяй ˋ123ˋ
+        remove("@alerus/package==123")  # выдаліць пакет з версіяй ``123``
     """
     removable_path: Path | str = ""
 
@@ -135,8 +139,8 @@ def info(package_id: str):
     Parameters
     ----------
     package_id : str
-        id пакета у фармаце ˋ@author/packageˋ
-        або ˋ@author/package==versionˋ
+        id пакета у фармаце ``@author/package``
+        або ``@author/package==version``
     """
     author, name, version = _get_package_id_parts(package_id)
     package_file = str(Path(NEXUS_PATH, author, name)) + ".toml"
@@ -155,7 +159,9 @@ def info(package_id: str):
         versions = ",".join(v["id"] for v in descriptor_data["versions"])
         print(f"versions = [{versions}]")
     else:
-        version_dict = next(v for v in descriptor_data["versions"] if v["id"] == version)
+        version_dict = next(
+            v for v in descriptor_data["versions"] if v["id"] == version
+        )
 
         for key, value in version_dict.items():
             print(f"version.{key} = {value}")

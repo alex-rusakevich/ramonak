@@ -4,7 +4,11 @@ from collections.abc import Iterable
 
 from ramonak.packages.actions import require
 
-STOP_WORDS = (require("@alerus/stopwords") / "belarusian.txt").read_text(encoding="utf8").split("\n")
+STOP_WORDS = (
+    (require("@alerus/stopwords") / "belarusian.txt")
+    .read_text(encoding="utf8")
+    .split("\n")
+)
 
 
 def clean_stop_words(data: Iterable[str]) -> Iterable[str]:
@@ -23,7 +27,7 @@ def clean_stop_words(data: Iterable[str]) -> Iterable[str]:
     Raises
     ------
     TypeError
-        няправільны тып дадзеных у ˋdataˋ
+        няправільны тып дадзеных у ``data``
     """
     if isinstance(data, str):
         msg = f"Wrong type: {type(data).__name__}. Data must be str or an iterable with str"

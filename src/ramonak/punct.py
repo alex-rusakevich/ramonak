@@ -26,7 +26,7 @@ def remove_punct(data: Iterable[str]) -> Iterable[str]:
     Raises
     ------
     TypeError
-        няправільны тып дадзеных у ˋdataˋ
+        няправільны тып дадзеных у ``data``
     """
     word_list = []
 
