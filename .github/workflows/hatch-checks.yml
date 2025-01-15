@@ -1,0 +1,37 @@
+name: Hatch Checks
+
+on:
+  push:
+    branches: [ master ]
+  pull_request: 
+    branches: [ master ]
+  workflow_dispatch:
+
+jobs:
+  hatch-checks:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          pip install hatch
+
+      - name: Run type checks
+        run: |
+          hatch run types:check
+
+      - name: Run linting
+        run: |
+          hatch fmt --check
+
+      - name: Run tests in the test folder
+        run: |
+          hatch test
