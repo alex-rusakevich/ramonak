@@ -4,7 +4,24 @@ from collections.abc import Iterable
 
 from ramonak.packages.actions import require
 
-STOP_WORDS = (require("@alerus/stopwords") / "belarusian.txt").read_text(encoding="utf8").split("\n")
+_stop_words = None
+
+
+def get_stop_words() -> list[str]:
+    """Атрымаць спіс стоп-слоў.
+
+    Returns
+    -------
+    list[str]
+        спіс стоп-слоў
+    """
+    global _stop_words  # noqa: PLW0603
+
+    if _stop_words:
+        return _stop_words
+
+    _stop_words = (require("@alerus/stopwords") / "belarusian.txt").read_text(encoding="utf8").split("\n")
+    return _stop_words
 
 
 def clean_stop_words(data: Iterable[str]) -> Iterable[str]:
@@ -36,7 +53,7 @@ def clean_stop_words(data: Iterable[str]) -> Iterable[str]:
             msg = f"Wrong type: {type(data_word).__name__}. Data must be str or an iterable with str"
             raise TypeError(msg)
 
-        if data_word not in STOP_WORDS:
+        if data_word not in get_stop_words():
             word_list.append(data_word)
 
     return word_list

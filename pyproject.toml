@@ -66,7 +66,7 @@ exclude_lines = ["no cov", "if __name__ == .__main__.:", "if TYPE_CHECKING:"]
 extend-exclude = ["tests", "docs", "__about__.py"]
 
 [tool.ruff.lint]
-select = ["D"]
+extend-select = ["D"]
 ignore = ["RUF001", "T201", "RUF002"]
 
 [tool.ruff.lint.pydocstyle]

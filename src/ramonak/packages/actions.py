@@ -54,7 +54,7 @@ def require(package_id: str) -> Path:
 
     if _local_package_exists(package_id):
         print("Already satisfied")
-        return package_path
+        return package_path.resolve()
     print("Downloading...")
 
     file_url = _retrieve_package_url(package_author, package_name, package_version)
@@ -66,7 +66,7 @@ def require(package_id: str) -> Path:
 
     print(f"The package '{package_author}/{package_name}=={package_version}' has been installed successfully")
 
-    return package_path
+    return package_path.resolve()
 
 
 def remove(package_id: str):

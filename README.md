@@ -1,5 +1,6 @@
 # Ramonak
 
+[![Hatch checks](https://github.com/alex-rusakevich/ramonak/actions/workflows/hatch-checks.yml/badge.svg)](https://github.com/alex-rusakevich/ramonak/actions/workflows/hatch-checks.yml)
 [![PyPI - Version](https://img.shields.io/pypi/v/ramonak.svg)](https://pypi.org/project/ramonak)
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/ramonak.svg)](https://pypi.org/project/ramonak)
 
