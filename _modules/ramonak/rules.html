@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ramonak.rules &#8212; ramonak 0.4.0 documentation</title>
+    <title>ramonak.rules &#8212; ramonak 0.4.1 documentation</title>
   
   
   
@@ -38,7 +38,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../_static/documentation_options.js?v=2375ead9"></script>
+    <script src="../../_static/documentation_options.js?v=988968c4"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -124,7 +124,7 @@
   
   
   
-    <p class="title logo__title">ramonak 0.4.0 documentation</p>
+    <p class="title logo__title">ramonak 0.4.1 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -275,11 +275,11 @@
     <span class="p">}</span>
 
     <span class="k">for</span> <span class="n">jvowel</span><span class="p">,</span> <span class="n">vowel</span> <span class="ow">in</span> <span class="n">vowel_pairs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-        <span class="n">word</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s2">&quot;дз&quot;</span> <span class="o">+</span> <span class="n">jvowel</span><span class="p">,</span> <span class="s2">&quot;д&quot;</span> <span class="o">+</span> <span class="n">vowel</span><span class="p">,</span> <span class="n">word</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">)</span>
-        <span class="n">word</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s2">&quot;ц&quot;</span> <span class="o">+</span> <span class="n">jvowel</span><span class="p">,</span> <span class="s2">&quot;т&quot;</span> <span class="o">+</span> <span class="n">vowel</span><span class="p">,</span> <span class="n">word</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">)</span>
+        <span class="n">word</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s2">&quot;дз&quot;</span> <span class="o">+</span> <span class="n">jvowel</span><span class="p">,</span> <span class="s2">&quot;д&quot;</span> <span class="o">+</span> <span class="n">vowel</span><span class="p">,</span> <span class="n">word</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">)</span>
+        <span class="n">word</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s2">&quot;ц&quot;</span> <span class="o">+</span> <span class="n">jvowel</span><span class="p">,</span> <span class="s2">&quot;т&quot;</span> <span class="o">+</span> <span class="n">vowel</span><span class="p">,</span> <span class="n">word</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">)</span>
 
-        <span class="n">word</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s2">&quot;дзв&quot;</span> <span class="o">+</span> <span class="n">jvowel</span><span class="p">,</span> <span class="s2">&quot;дв&quot;</span> <span class="o">+</span> <span class="n">vowel</span><span class="p">,</span> <span class="n">word</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">)</span>
-        <span class="n">word</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s2">&quot;цв&quot;</span> <span class="o">+</span> <span class="n">jvowel</span><span class="p">,</span> <span class="s2">&quot;тв&quot;</span> <span class="o">+</span> <span class="n">vowel</span><span class="p">,</span> <span class="n">word</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">)</span>
+        <span class="n">word</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s2">&quot;дзв&quot;</span> <span class="o">+</span> <span class="n">jvowel</span><span class="p">,</span> <span class="s2">&quot;дв&quot;</span> <span class="o">+</span> <span class="n">vowel</span><span class="p">,</span> <span class="n">word</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">)</span>
+        <span class="n">word</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s2">&quot;цв&quot;</span> <span class="o">+</span> <span class="n">jvowel</span><span class="p">,</span> <span class="s2">&quot;тв&quot;</span> <span class="o">+</span> <span class="n">vowel</span><span class="p">,</span> <span class="n">word</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">word</span></div>
 
@@ -300,7 +300,7 @@
 <span class="sd">    str</span>
 <span class="sd">        слова з &quot;у&quot; ў пачатку</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;^ў&quot;</span><span class="p">,</span> <span class="s2">&quot;у&quot;</span><span class="p">,</span> <span class="n">word</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;^ў&quot;</span><span class="p">,</span> <span class="s2">&quot;у&quot;</span><span class="p">,</span> <span class="n">word</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">)</span></div>
 
 
 
