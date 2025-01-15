@@ -39,8 +39,12 @@ jobs:
       - name: Build Package
         run: |
           hatch build
+
+      - name: Generate .pypirc
+        run: |
+          hatch build
   
       - name: Publish Package
         env:
           PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
-        run: hatch publish --token $PYPI_TOKEN
+        run: hatch publish --auth $PYPI_TOKEN
