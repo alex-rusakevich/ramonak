@@ -36,8 +36,9 @@ jobs:
         run: |
           hatch test
 
-          - name: Build Package
-          run: hatch build
+      - name: Build Package
+        run: |
+          hatch build
   
       - name: Publish Package
         env:
