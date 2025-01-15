@@ -42,7 +42,7 @@ print(
     )
 ```
 
-Больш падрабязную дакументацыю вы можаце знайсці ў файле [docs/ramonak/index.md](./docs/ramonak/index.md).
+Больш падрабязную дакументацыю вы можаце знайсці на сайце https://alex-rusakevich.github.io/ramonak/.
 
 ## Дарожная карта
 

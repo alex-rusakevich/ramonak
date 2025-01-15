@@ -15,7 +15,7 @@ class FlexionStatStemmer(BaseStemmer):
         self.flexions = []
 
         with open(
-            flexistat_dir / "unchangeable_words.txt",
+            flexistat_dir / "all_unchangeable.txt",
             encoding="utf8",
         ) as f:
             for unchangealbe_word in f.readlines():
@@ -25,7 +25,7 @@ class FlexionStatStemmer(BaseStemmer):
                     self.unchangeable_words.append(word)
 
         with open(
-            flexistat_dir / "flexions.txt",
+            flexistat_dir / "all_flexions.txt",
             encoding="utf8",
         ) as f:
             for file_flexion in f.readlines():

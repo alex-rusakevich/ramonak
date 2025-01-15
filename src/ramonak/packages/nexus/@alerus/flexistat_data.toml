@@ -9,3 +9,7 @@ description = "Змяшчае спіс самых частых флексій і
 [[versions]]
 id = "20250111_125624"
 url = "https://github.com/alex-rusakevich/ramonak-flexistat-data/releases/download/20250111_125624/STEMDATA_20250111_125624.zip"
+
+[[versions]]
+id = "20250116_001913"
+url = "https://github.com/alex-rusakevich/ramonak-flexistat-data/releases/download/20250116_001913/STEMDATA_20250116_001913.zip"

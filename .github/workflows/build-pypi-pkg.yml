@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  hatch-checks:
+  prepare:
     runs-on: ubuntu-latest
 
     steps:
@@ -23,7 +23,11 @@ jobs:
       - name: Install dependencies
         run: |
           pip install hatch
-
+  
+  check:
+    runs-on: ubuntu-latest
+    needs: prepare
+    steps:
       - name: Run type checks
         run: |
           hatch run types:check
@@ -35,15 +39,19 @@ jobs:
       - name: Run tests in the test folder
         run: |
           hatch test
-
+    
+  build:
+    runs-on: ubuntu-latest
+    needs: check
+    steps:
       - name: Build Package
         run: |
           hatch build
-
-      - name: Generate .pypirc
-        run: |
-          hatch build
   
+  publish:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
       - name: Publish Package
         env:
           PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
