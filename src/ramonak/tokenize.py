@@ -1,3 +1,5 @@
+"""Модуль з функцыямі такенізацыі."""
+
 import itertools
 import re
 
@@ -10,7 +12,7 @@ re_sent_tokenize_keep = re.compile(r"([^{sent_punct}]+[{sent_punct}]+)".format(s
 
 
 def word_tokenize(text: str) -> list[str]:
-    """Разбіць тэкст на спіс слоў і знакаў прыпынку
+    """Разбіць тэкст на спіс слоў і знакаў прыпынку.
 
     Parameters
     ----------
@@ -22,12 +24,11 @@ def word_tokenize(text: str) -> list[str]:
     list[str]
         спіс са словамі і знакамі прыпынку
     """
-
     return list(itertools.chain(*[sent_parts.split() for sent_parts in re_word_tokenize_keep.split(text)]))
 
 
 def sent_tokenize(text: str) -> list[str]:
-    """Разбіць тэкст на сказы. Знакі прыпынку захоўваюцца
+    """Разбіць тэкст на сказы. Знакі прыпынку захоўваюцца.
 
     Parameters
     ----------
@@ -39,7 +40,6 @@ def sent_tokenize(text: str) -> list[str]:
     list[str]
         спіс сказаў
     """
-
     result = []
 
     for re_sentence in re_sent_tokenize_keep.split(text):

@@ -6,16 +6,16 @@
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-import sys
 import os
+import sys
 
 sys.path.insert(0, os.path.abspath("../src/"))
 
 from ramonak.__about__ import __version__
 
-project = 'ramonak'
-copyright = '2025, Alexander Rusakevich'
-author = 'Alexander Rusakevich'
+project = "ramonak"
+copyright = "2025, Alexander Rusakevich"
+author = "Alexander Rusakevich"
 release = __version__
 
 # -- General configuration ---------------------------------------------------
@@ -24,19 +24,22 @@ release = __version__
 extensions = [
     "sphinx.ext.autodoc",
     "sphinx.ext.napoleon",
-    "sphinx.ext.viewcode"
+    "sphinx.ext.viewcode",
+    "sphinx.ext.coverage",
 ]
 
-templates_path = ['_templates']
-exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
+templates_path = ["_templates"]
+exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 
-language = 'be'
+language = "be"
 
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
-html_theme = 'alabaster'
-html_static_path = ['_static']
+html_theme = "alabaster"
+html_theme = "sphinx_book_theme"
+
+auto_doc_default_options = {"autosummary": True}
 
 napoleon_numpy_docstring = True
 napoleon_google_docstring = False

@@ -12,7 +12,7 @@ from ramonak.exceptions import RamonakPackageManagerError
 from ramonak.packages import NEXUS_PATH
 
 
-def fetch_unzip(zip_file_url: str, destination_dir: Path | str) -> Path:
+def _fetch_unzip(zip_file_url: str, destination_dir: Path | str) -> Path:
     Path(destination_dir).mkdir(exist_ok=True, parents=True)
     bio = io.BytesIO()
 
@@ -33,20 +33,20 @@ def fetch_unzip(zip_file_url: str, destination_dir: Path | str) -> Path:
     return Path(destination_dir)
 
 
-def package_path(package_id: str) -> Path:
-    author, name, version = get_package_id_parts(package_id)
+def _package_path(package_id: str) -> Path:
+    author, name, version = _get_package_id_parts(package_id)
     return Path(PACKAGES_PATH, author, name, version)
 
 
-def local_package_exists(package_name: str) -> bool:
-    package_dir = package_path(package_name)
+def _local_package_exists(package_name: str) -> bool:
+    package_dir = _package_path(package_name)
 
     if package_dir.exists() and any(package_dir.iterdir()):
         return True
     return False
 
 
-def get_package_id_parts(package: str) -> tuple[str, str, str]:
+def _get_package_id_parts(package: str) -> tuple[str, str, str]:
     package = re.sub(r"\s", "", package)
 
     package_version = ""
@@ -65,14 +65,14 @@ def get_package_id_parts(package: str) -> tuple[str, str, str]:
     return package_author, package_name, package_version
 
 
-def get_package_versions(package_author, package_name) -> list:
+def _get_package_versions(package_author, package_name) -> list:
     package_file = str(Path(NEXUS_PATH, package_author, package_name)) + ".toml"
     package_dict = tomllib.loads(Path(package_file).read_text(encoding="utf8"))
 
     return package_dict["versions"]
 
 
-def retrieve_package_url(package_author, package_name, package_version) -> str:
+def _retrieve_package_url(package_author, package_name, package_version) -> str:
     package_file = str(Path(NEXUS_PATH, package_author, package_name)) + ".toml"
     package_dict = tomllib.loads(Path(package_file).read_text(encoding="utf8"))
 

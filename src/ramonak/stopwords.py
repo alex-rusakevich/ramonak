@@ -1,3 +1,5 @@
+"""Праца са стоп-словамі."""
+
 from collections.abc import Iterable
 
 from ramonak.packages.actions import require
@@ -6,7 +8,7 @@ STOP_WORDS = (require("@alerus/stopwords") / "belarusian.txt").read_text(encodin
 
 
 def clean_stop_words(data: Iterable[str]) -> Iterable[str]:
-    """Убраць усе стоп-словы са спісу радкоў
+    """Убраць усе стоп-словы са спісу радкоў.
 
     Parameters
     ----------
@@ -23,7 +25,6 @@ def clean_stop_words(data: Iterable[str]) -> Iterable[str]:
     TypeError
         няправільны тып дадзеных у ˋdataˋ
     """
-
     if isinstance(data, str):
         msg = f"Wrong type: {type(data).__name__}. Data must be str or an iterable with str"
         raise TypeError(msg)

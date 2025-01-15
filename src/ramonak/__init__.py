@@ -1,3 +1,5 @@
+"""Галоўны модуль праекта. Грузіць .env-файлы, стварае неабходныя папкі."""
+
 import os
 from pathlib import Path
 from typing import cast

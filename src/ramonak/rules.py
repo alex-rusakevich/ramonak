@@ -1,9 +1,21 @@
+"""Модуль з функцыямі для працы з чаргаваннямі і іншымі асаблівасцямі беларускай мовы."""
+
 import re
 
 
 def unify_dz_ts_to_d_t(word: str) -> str:
-    """Dzekannie, tsekannie, soft + jvowel = hard + jvowel"""
+    """Ператварыць "дз" і "ц" у "д" і "т".
 
+    Parameters
+    ----------
+    word : str
+        слова для апрацоўкі
+
+    Returns
+    -------
+    str
+        слова без дзекання і цекання
+    """
     vowel_pairs = {
         "е": "э",
         "ё": "о",
@@ -23,10 +35,34 @@ def unify_dz_ts_to_d_t(word: str) -> str:
 
 
 def fix_trailing_u_short(word: str) -> str:
+    """Ператварае "ў" у пачатку слова ў "у".
+
+    Parameters
+    ----------
+    word : str
+        слова для апрацоўкі
+
+    Returns
+    -------
+    str
+        слова з "у" ў пачатку
+    """
     return re.sub(r"^ў", "у", word)
 
 
 def fix_lang_phenomenons(word: str) -> str:
+    """Прымяніць функцыі для ўніфікацыі чаргаванняў і іншых з'яў беларускай мовы.
+
+    Parameters
+    ----------
+    word : str
+        слова для апрацоўкі
+
+    Returns
+    -------
+    str
+        уніфіцыраванае слова
+    """
     # region dzekannie, tsekannie, soft + jvowel = hard + jvowel
     word = unify_dz_ts_to_d_t(word)
     # endregion

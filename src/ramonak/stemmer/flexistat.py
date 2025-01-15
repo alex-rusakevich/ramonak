@@ -1,11 +1,12 @@
+"""Модуль са стэмерам на аснове статыстыкі флексій."""
+
 from ramonak.packages.actions import require
 from ramonak.rules import fix_lang_phenomenons
-from ramonak.stemmer.base import Stemmer
+from ramonak.stemmer.base import BaseStemmer
 
 
-class FlexionStatStemmer(Stemmer):
-    """Стэмер на аснове статыстыкі флексій
-    """    
+class FlexionStatStemmer(BaseStemmer):
+    """Стэмер на аснове статыстыкі флексій."""
 
     def __init__(self):
         flexistat_dir = require("@alerus/flexistat_data")
@@ -34,7 +35,7 @@ class FlexionStatStemmer(Stemmer):
                     self.flexions.append(flexion)
 
     def stem_word(self, word: str) -> str:
-        """Апрацаваць слова стэмерам на аснове алгарытма статыстыкі флексій
+        """Апрацаваць слова стэмерам на аснове алгарытма статыстыкі флексій.
 
         Parameters
         ----------
@@ -46,7 +47,6 @@ class FlexionStatStemmer(Stemmer):
         str
             слова, якое было апрацавана стэмерам
         """
-
         if word in self.unchangeable_words:
             return word
 

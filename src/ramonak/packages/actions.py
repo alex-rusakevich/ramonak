@@ -1,3 +1,5 @@
+"""Фунцыі кіравання пакетамі."""
+
 import shutil
 import tomllib
 from pathlib import Path
@@ -5,18 +7,17 @@ from pathlib import Path
 from ramonak import PACKAGES_PATH
 from ramonak.exceptions import RamonakPackageManagerError
 from ramonak.packages import NEXUS_PATH
-from ramonak.packages.utils import (
-    fetch_unzip,
-    get_package_id_parts,
-    get_package_versions,
-    local_package_exists,
-    retrieve_package_url,
+from ramonak.packages._utils import (
+    _fetch_unzip,
+    _get_package_id_parts,
+    _get_package_versions,
+    _local_package_exists,
+    _retrieve_package_url,
 )
 
 
 def require(package_id: str) -> Path:
-    """Падключыць да кода пакет з дадзенымі. Калі гэтага пакета няма,
-    ён будзе спампаваны.
+    """Падключыць да кода пакет з дадзенымі. Калі гэтага пакета няма, ён будзе спампаваны.
 
     Parameters
     ----------
@@ -33,14 +34,15 @@ def require(package_id: str) -> Path:
     Examples
     --------
     .. code-block:: python
+        :linenos:
+
         package = require("@author/package")
         f = open(package / "file.txt", "r", encoding="utf8")
     """
-
-    package_author, package_name, package_version = get_package_id_parts(package_id)
+    package_author, package_name, package_version = _get_package_id_parts(package_id)
 
     if "==" not in package_id:
-        package_version = get_package_versions(package_author, package_name)[-1]["id"]
+        package_version = _get_package_versions(package_author, package_name)[-1]["id"]
         print(
             f"Required '{package_id}=={package_version}'...",
             end=" ",
@@ -50,14 +52,14 @@ def require(package_id: str) -> Path:
 
     package_path = Path(PACKAGES_PATH, package_author, package_name, str(package_version))
 
-    if local_package_exists(package_id):
+    if _local_package_exists(package_id):
         print("Already satisfied")
         return package_path
     print("Downloading...")
 
-    file_url = retrieve_package_url(package_author, package_name, package_version)
+    file_url = _retrieve_package_url(package_author, package_name, package_version)
 
-    fetch_unzip(
+    _fetch_unzip(
         file_url,
         package_path,
     )
@@ -68,7 +70,7 @@ def require(package_id: str) -> Path:
 
 
 def remove(package_id: str):
-    """Выдаліць пакет з лакальнага сховішча
+    """Выдаліць пакет з лакальнага сховішча.
 
     Parameters
     ----------
@@ -86,15 +88,14 @@ def remove(package_id: str):
     Examples
     --------
     .. code-block:: python
-        remove("@alerus/package") # выдаліць усе версіі пакета
-        remove("@alerus/package==123") # выдаліць пакет з версіяй ˋ123ˋ
-    """    
+        :linenos:
 
-    remove()
-
+        remove("@alerus/package")  # выдаліць усе версіі пакета
+        remove("@alerus/package==123")  # выдаліць пакет з версіяй ˋ123ˋ
+    """
     removable_path: Path | str = ""
 
-    author, name, version = get_package_id_parts(package_id)
+    author, name, version = _get_package_id_parts(package_id)
 
     if "==" not in package_id:
         print(
@@ -119,9 +120,7 @@ def remove(package_id: str):
 
 
 def purge():
-    """Выдаліць *усе* пакеты з лакальнага сховішча
-    """    
-
+    """Выдаліць *усе* пакеты з лакальнага сховішча."""
     print("Removing all the local packages...", end=" ")
 
     shutil.rmtree(PACKAGES_PATH)
@@ -131,16 +130,15 @@ def purge():
 
 
 def info(package_id: str):
-    """Вывесці інфармацыю пра пакет
+    """Вывесці інфармацыю пра пакет.
 
     Parameters
     ----------
     package_id : str
         id пакета у фармаце ˋ@author/packageˋ
         або ˋ@author/package==versionˋ
-    """   
-
-    author, name, version = get_package_id_parts(package_id)
+    """
+    author, name, version = _get_package_id_parts(package_id)
     package_file = str(Path(NEXUS_PATH, author, name)) + ".toml"
     descriptor_text = Path(package_file).read_text(encoding="utf8")
     descriptor_data = tomllib.loads(descriptor_text)

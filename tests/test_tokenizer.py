@@ -1,5 +1,5 @@
 from ramonak.punct import remove_punct
-from ramonak.tokenizer import sent_tokenize, word_tokenize
+from ramonak.tokenize import sent_tokenize, word_tokenize
 
 
 def test_word_tokenize():

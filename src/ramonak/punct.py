@@ -1,3 +1,5 @@
+"""Праца са знакамі прыпынку."""
+
 import re
 import string
 from collections.abc import Iterable
@@ -9,7 +11,7 @@ SENT_PUNCT = ".?!…"
 
 
 def remove_punct(data: Iterable[str]) -> Iterable[str]:
-    """Выдаліць знакі пунктуацыі са спісу радкоў
+    """Выдаліць знакі пунктуацыі са спісу радкоў.
 
     Parameters
     ----------
@@ -26,7 +28,6 @@ def remove_punct(data: Iterable[str]) -> Iterable[str]:
     TypeError
         няправільны тып дадзеных у ˋdataˋ
     """
-
     word_list = []
 
     if isinstance(data, str):
