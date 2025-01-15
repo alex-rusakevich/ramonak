@@ -6,4 +6,4 @@ class RamonakError(Exception):
 
 
 class RamonakPackageManagerError(RamonakError):
-    """Агульны клас для ўсіх выключэнняў менеджэра пакетаў."""
+    """Агульны клас для ўсіх выключэнняў менеджара пакетаў."""
