@@ -1,4 +1,4 @@
 class RamonakPackageManagerError(Exception):
-    """Common class for all ramonak's package manager exceptions
+    """Агульны клас для ўсіх выключэнняў менеджэра пакетаў
     """    
     pass
