@@ -169,4 +169,12 @@ cython_debug/
 #.idea/
 
 # PyPI configuration file
-.pypircX
+.pypirc
+
+# region Custom ignores
+/ncorp/
+/.alerus/
+/.vim/
+
+.env.prod
+# endregion
