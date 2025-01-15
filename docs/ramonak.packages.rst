@@ -12,14 +12,6 @@ ramonak.packages.actions module
    :undoc-members:
    :show-inheritance:
 
-ramonak.packages.utils module
------------------------------
-
-.. automodule:: ramonak.packages.utils
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 Module contents
 ---------------
 

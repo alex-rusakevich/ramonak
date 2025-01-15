@@ -25,11 +25,11 @@ def unify_dz_ts_to_d_t(word: str) -> str:
     }
 
     for jvowel, vowel in vowel_pairs.items():
-        word = re.sub("дз" + jvowel, "д" + vowel, word)
-        word = re.sub("ц" + jvowel, "т" + vowel, word)
+        word = re.sub("дз" + jvowel, "д" + vowel, word, re.IGNORECASE)
+        word = re.sub("ц" + jvowel, "т" + vowel, word, re.IGNORECASE)
 
-        word = re.sub("дзв" + jvowel, "дв" + vowel, word)
-        word = re.sub("цв" + jvowel, "тв" + vowel, word)
+        word = re.sub("дзв" + jvowel, "дв" + vowel, word, re.IGNORECASE)
+        word = re.sub("цв" + jvowel, "тв" + vowel, word, re.IGNORECASE)
 
     return word
 
@@ -47,7 +47,7 @@ def fix_trailing_u_short(word: str) -> str:
     str
         слова з "у" ў пачатку
     """
-    return re.sub(r"^ў", "у", word)
+    return re.sub(r"^ў", "у", word, re.IGNORECASE)
 
 
 def fix_lang_phenomenons(word: str) -> str:

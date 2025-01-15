@@ -45,18 +45,10 @@ ramonak.stopwords module
    :undoc-members:
    :show-inheritance:
 
-ramonak.tokenizer module
-------------------------
+ramonak.tokenize module
+-----------------------
 
-.. automodule:: ramonak.tokenizer
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-ramonak.utils module
---------------------
-
-.. automodule:: ramonak.utils
+.. automodule:: ramonak.tokenize
    :members:
    :undoc-members:
    :show-inheritance:

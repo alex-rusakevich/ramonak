@@ -5,4 +5,4 @@
    :maxdepth: 2
    :caption: Змест:
 
-   ./ramonak.rst
+   ./modules.rst

@@ -78,7 +78,7 @@ dependencies = ["sphinx", "sphinx-book-theme"]
 [tool.hatch.envs.docs.scripts]
 generate = "cd docs && sphinx-apidoc -o . ../src/ramonak && make html && cd .."
 server = "cd docs/_build/html && python -m http.server 8089 && cd ../../../"
-coverage = "cd docs && cross-env SPHINX_APIDOC_OPTIONS=members sphinx-apidoc -o . ../src/ramonak && sphinx-build -v -b coverage . ./_build/coverage && cd .."
+publish = "gh-pages -d docs/_build/html"
 
 [tool.hatch.envs.hatch-test]
 parallel = true
