@@ -47,4 +47,4 @@ jobs:
       - name: Publish Package
         env:
           PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
-        run: hatch publish --auth $PYPI_TOKEN
+        run: hatch publish --user __token__ --auth $PYPI_TOKEN
