@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ramonak.packages.actions &#8212; ramonak 0.4.2 documentation</title>
+    <title>ramonak.packages.actions &#8212; ramonak 0.4.3 documentation</title>
   
   
   
@@ -38,7 +38,7 @@
   <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../../_static/documentation_options.js?v=8ffde8a2"></script>
+    <script src="../../../_static/documentation_options.js?v=34016abf"></script>
     <script src="../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -124,7 +124,7 @@
   
   
   
-    <p class="title logo__title">ramonak 0.4.2 documentation</p>
+    <p class="title logo__title">ramonak 0.4.3 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -302,7 +302,7 @@
 
     <span class="n">package_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">PACKAGES_PATH</span><span class="p">,</span> <span class="n">package_author</span><span class="p">,</span> <span class="n">package_name</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">package_version</span><span class="p">))</span>
 
-    <span class="k">if</span> <span class="n">_local_package_exists</span><span class="p">(</span><span class="n">package_id</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">_local_package_exists</span><span class="p">(</span><span class="n">package_id</span> <span class="k">if</span> <span class="s2">&quot;==&quot;</span> <span class="ow">in</span> <span class="n">package_id</span> <span class="k">else</span> <span class="n">package_id</span> <span class="o">+</span> <span class="s2">&quot;==&quot;</span> <span class="o">+</span> <span class="n">package_version</span><span class="p">):</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Already satisfied&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">package_path</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Downloading...&quot;</span><span class="p">)</span>
