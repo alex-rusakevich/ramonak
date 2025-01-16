@@ -9,7 +9,7 @@ from tqdm import tqdm
 
 from ramonak import PACKAGES_PATH
 from ramonak.exceptions import RamonakPackageManagerError
-from ramonak.packages import NEXUS_PATH
+from ramonak.packages import HERBARIUM_PATH
 
 
 def _fetch_unzip(zip_file_url: str, destination_dir: Path | str) -> Path:
@@ -66,14 +66,14 @@ def _get_package_id_parts(package: str) -> tuple[str, str, str]:
 
 
 def _get_package_versions(package_author, package_name) -> list:
-    package_file = str(Path(NEXUS_PATH, package_author, package_name)) + ".toml"
+    package_file = str(Path(HERBARIUM_PATH, package_author, package_name)) + ".toml"
     package_dict = tomllib.loads(Path(package_file).read_text(encoding="utf8"))
 
     return package_dict["versions"]
 
 
 def _retrieve_package_url(package_author, package_name, package_version) -> str:
-    package_file = str(Path(NEXUS_PATH, package_author, package_name)) + ".toml"
+    package_file = str(Path(HERBARIUM_PATH, package_author, package_name)) + ".toml"
     package_dict = tomllib.loads(Path(package_file).read_text(encoding="utf8"))
 
     for version in package_dict["versions"]:
