@@ -1,12 +1,15 @@
 """Фунцыі кіравання пакетамі."""
 
 import shutil
+import subprocess
+import sys
 import tomllib
 from pathlib import Path
+from typing import cast
 
 from ramonak import PACKAGES_PATH
 from ramonak.exceptions import RamonakPackageManagerError
-from ramonak.packages import NEXUS_PATH
+from ramonak.packages import HERBARIUM_PATH
 from ramonak.packages._utils import (
     _fetch_unzip,
     _get_package_id_parts,
@@ -50,23 +53,60 @@ def require(package_id: str) -> Path:
     else:
         print(f"Required package '{package_id}'...", end=" ")
 
-    package_path = Path(PACKAGES_PATH, package_author, package_name, str(package_version))
+    sys.stdout.flush()
 
-    if _local_package_exists(package_id if "==" in package_id else package_id + "==" + package_version):
-        print("Already satisfied")
-        return package_path.resolve()
-    print("Downloading...")
+    package_path = Path(PACKAGES_PATH, package_author, package_name, str(package_version)).resolve()
 
-    file_url = _retrieve_package_url(package_author, package_name, package_version)
+    if package_version == "git":
+        git_path = shutil.which("git")
 
-    _fetch_unzip(
-        file_url,
-        package_path,
-    )
+        if _local_package_exists(package_id if "==" in package_id else package_id + "==" + package_version):
+            if (
+                subprocess.run(
+                    [cast(str, git_path), "-C", str(package_path), "pull"],
+                    stdout=sys.stdout,
+                    stderr=sys.stderr,
+                    check=False,
+                ).returncode
+                != 0
+            ):
+                msg = "Git failed with an error"
+                raise RamonakPackageManagerError(msg)
+
+            return package_path
+
+        print("Downloading...")
+
+        file_url = _retrieve_package_url(package_author, package_name, package_version)
+        package_path.mkdir(parents=True, exist_ok=True)
+
+        if (
+            subprocess.run(
+                [cast(str, git_path), "clone", file_url, str(package_path)],
+                stdout=sys.stdout,
+                stderr=sys.stderr,
+                check=False,
+            ).returncode
+            != 0
+        ):
+            msg = "Git failed with an error"
+            raise RamonakPackageManagerError(msg)
+    else:
+        if _local_package_exists(package_id if "==" in package_id else package_id + "==" + package_version):
+            print("Already satisfied")
+            return package_path.resolve()
+        print("Downloading...")
+
+        file_url = _retrieve_package_url(package_author, package_name, package_version)
+
+        _fetch_unzip(
+            file_url,
+            package_path,
+        )
 
     print(f"The package '{package_author}/{package_name}=={package_version}' has been installed successfully")
 
-    return package_path.resolve()
+    return package_path
 
 
 def remove(package_id: str):
@@ -139,7 +179,7 @@ def info(package_id: str):
         або ``@author/package==version``
     """
     author, name, version = _get_package_id_parts(package_id)
-    package_file = str(Path(NEXUS_PATH, author, name)) + ".toml"
+    package_file = str(Path(HERBARIUM_PATH, author, name)) + ".toml"
     descriptor_text = Path(package_file).read_text(encoding="utf8")
     descriptor_data = tomllib.loads(descriptor_text)
 
