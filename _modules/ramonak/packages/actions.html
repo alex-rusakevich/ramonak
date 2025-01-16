@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ramonak.packages.actions &#8212; ramonak 0.4.3 documentation</title>
+    <title>ramonak.packages.actions &#8212; ramonak 0.5.0 documentation</title>
   
   
   
@@ -38,7 +38,7 @@
   <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../../_static/documentation_options.js?v=34016abf"></script>
+    <script src="../../../_static/documentation_options.js?v=dfafdf35"></script>
     <script src="../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -124,7 +124,7 @@
   
   
   
-    <p class="title logo__title">ramonak 0.4.3 documentation</p>
+    <p class="title logo__title">ramonak 0.5.0 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -249,12 +249,15 @@
 <span></span><span class="sd">&quot;&quot;&quot;Фунцыі кіравання пакетамі.&quot;&quot;&quot;</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">shutil</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">subprocess</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">tomllib</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">cast</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">ramonak</span><span class="w"> </span><span class="kn">import</span> <span class="n">PACKAGES_PATH</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">ramonak.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">RamonakPackageManagerError</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">ramonak.packages</span><span class="w"> </span><span class="kn">import</span> <span class="n">NEXUS_PATH</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ramonak.packages</span><span class="w"> </span><span class="kn">import</span> <span class="n">HERBARIUM_PATH</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">ramonak.packages._utils</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">_fetch_unzip</span><span class="p">,</span>
     <span class="n">_get_package_id_parts</span><span class="p">,</span>
@@ -300,23 +303,60 @@
     <span class="k">else</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Required package &#39;</span><span class="si">{</span><span class="n">package_id</span><span class="si">}</span><span class="s2">&#39;...&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
 
-    <span class="n">package_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">PACKAGES_PATH</span><span class="p">,</span> <span class="n">package_author</span><span class="p">,</span> <span class="n">package_name</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">package_version</span><span class="p">))</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
 
-    <span class="k">if</span> <span class="n">_local_package_exists</span><span class="p">(</span><span class="n">package_id</span> <span class="k">if</span> <span class="s2">&quot;==&quot;</span> <span class="ow">in</span> <span class="n">package_id</span> <span class="k">else</span> <span class="n">package_id</span> <span class="o">+</span> <span class="s2">&quot;==&quot;</span> <span class="o">+</span> <span class="n">package_version</span><span class="p">):</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Already satisfied&quot;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">package_path</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Downloading...&quot;</span><span class="p">)</span>
+    <span class="n">package_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">PACKAGES_PATH</span><span class="p">,</span> <span class="n">package_author</span><span class="p">,</span> <span class="n">package_name</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">package_version</span><span class="p">))</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span>
 
-    <span class="n">file_url</span> <span class="o">=</span> <span class="n">_retrieve_package_url</span><span class="p">(</span><span class="n">package_author</span><span class="p">,</span> <span class="n">package_name</span><span class="p">,</span> <span class="n">package_version</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">package_version</span> <span class="o">==</span> <span class="s2">&quot;git&quot;</span><span class="p">:</span>
+        <span class="n">git_path</span> <span class="o">=</span> <span class="n">shutil</span><span class="o">.</span><span class="n">which</span><span class="p">(</span><span class="s2">&quot;git&quot;</span><span class="p">)</span>
 
-    <span class="n">_fetch_unzip</span><span class="p">(</span>
-        <span class="n">file_url</span><span class="p">,</span>
-        <span class="n">package_path</span><span class="p">,</span>
-    <span class="p">)</span>
+        <span class="k">if</span> <span class="n">_local_package_exists</span><span class="p">(</span><span class="n">package_id</span> <span class="k">if</span> <span class="s2">&quot;==&quot;</span> <span class="ow">in</span> <span class="n">package_id</span> <span class="k">else</span> <span class="n">package_id</span> <span class="o">+</span> <span class="s2">&quot;==&quot;</span> <span class="o">+</span> <span class="n">package_version</span><span class="p">):</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
+                    <span class="p">[</span><span class="n">cast</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">git_path</span><span class="p">),</span> <span class="s2">&quot;-C&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">package_path</span><span class="p">),</span> <span class="s2">&quot;pull&quot;</span><span class="p">],</span>
+                    <span class="n">stdout</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">,</span>
+                    <span class="n">stderr</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span>
+                    <span class="n">check</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                <span class="p">)</span><span class="o">.</span><span class="n">returncode</span>
+                <span class="o">!=</span> <span class="mi">0</span>
+            <span class="p">):</span>
+                <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Git failed with an error&quot;</span>
+                <span class="k">raise</span> <span class="n">RamonakPackageManagerError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+
+            <span class="k">return</span> <span class="n">package_path</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Downloading...&quot;</span><span class="p">)</span>
+
+        <span class="n">file_url</span> <span class="o">=</span> <span class="n">_retrieve_package_url</span><span class="p">(</span><span class="n">package_author</span><span class="p">,</span> <span class="n">package_name</span><span class="p">,</span> <span class="n">package_version</span><span class="p">)</span>
+        <span class="n">package_path</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
+                <span class="p">[</span><span class="n">cast</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">git_path</span><span class="p">),</span> <span class="s2">&quot;clone&quot;</span><span class="p">,</span> <span class="n">file_url</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">package_path</span><span class="p">)],</span>
+                <span class="n">stdout</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">,</span>
+                <span class="n">stderr</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span>
+                <span class="n">check</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="p">)</span><span class="o">.</span><span class="n">returncode</span>
+            <span class="o">!=</span> <span class="mi">0</span>
+        <span class="p">):</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Git failed with an error&quot;</span>
+            <span class="k">raise</span> <span class="n">RamonakPackageManagerError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">_local_package_exists</span><span class="p">(</span><span class="n">package_id</span> <span class="k">if</span> <span class="s2">&quot;==&quot;</span> <span class="ow">in</span> <span class="n">package_id</span> <span class="k">else</span> <span class="n">package_id</span> <span class="o">+</span> <span class="s2">&quot;==&quot;</span> <span class="o">+</span> <span class="n">package_version</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Already satisfied&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">package_path</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Downloading...&quot;</span><span class="p">)</span>
+
+        <span class="n">file_url</span> <span class="o">=</span> <span class="n">_retrieve_package_url</span><span class="p">(</span><span class="n">package_author</span><span class="p">,</span> <span class="n">package_name</span><span class="p">,</span> <span class="n">package_version</span><span class="p">)</span>
+
+        <span class="n">_fetch_unzip</span><span class="p">(</span>
+            <span class="n">file_url</span><span class="p">,</span>
+            <span class="n">package_path</span><span class="p">,</span>
+        <span class="p">)</span>
 
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The package &#39;</span><span class="si">{</span><span class="n">package_author</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">package_name</span><span class="si">}</span><span class="s2">==</span><span class="si">{</span><span class="n">package_version</span><span class="si">}</span><span class="s2">&#39; has been installed successfully&quot;</span><span class="p">)</span>
 
-    <span class="k">return</span> <span class="n">package_path</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span></div>
+    <span class="k">return</span> <span class="n">package_path</span></div>
 
 
 
@@ -398,7 +438,7 @@
 <span class="sd">        або ``@author/package==version``</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">author</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">version</span> <span class="o">=</span> <span class="n">_get_package_id_parts</span><span class="p">(</span><span class="n">package_id</span><span class="p">)</span>
-    <span class="n">package_file</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">NEXUS_PATH</span><span class="p">,</span> <span class="n">author</span><span class="p">,</span> <span class="n">name</span><span class="p">))</span> <span class="o">+</span> <span class="s2">&quot;.toml&quot;</span>
+    <span class="n">package_file</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">HERBARIUM_PATH</span><span class="p">,</span> <span class="n">author</span><span class="p">,</span> <span class="n">name</span><span class="p">))</span> <span class="o">+</span> <span class="s2">&quot;.toml&quot;</span>
     <span class="n">descriptor_text</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">package_file</span><span class="p">)</span><span class="o">.</span><span class="n">read_text</span><span class="p">(</span><span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf8&quot;</span><span class="p">)</span>
     <span class="n">descriptor_data</span> <span class="o">=</span> <span class="n">tomllib</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">descriptor_text</span><span class="p">)</span>
 
